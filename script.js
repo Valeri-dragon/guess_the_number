@@ -1,8 +1,11 @@
 "use strict";
 const contentConteiner = document.getElementById("content");
+const playBtn = contentConteiner.querySelector(".ok");
+
 let quest;
 let notification;
 let numGuess;
+let attempt = 10;
 
 const numRandom = function () {
   numGuess = Math.ceil(Math.random() * 100);
@@ -23,25 +26,37 @@ const isNumber = function (num) {
 };
 
 const showingQuestion = function (x) {
+
   function question() {
-    quest = prompt("Угадай число от 1 до 100");
+
+    attempt--;
+
+    quest = prompt("Угадай число от 1 до 100\nУ вас 10 попыток");
 
     switch (true) {
       case quest === null:
+        alert("Мы рады будем вас видеть снова!");
         notification = `<p>Игра окончена</p>`;
         break;
-
+      case attempt === 0 && x !== isNumber(quest):
+        notification = `<p>Попытки закончились.</p>
+        <p>Загаданное число = <span>${numGuess}</span></p>
+         Хотите сыграть еще?</p>
+                  `;
+        break;
       case x === isNumber(quest):
-        notification = `<p>Поздравляю, Вы угадали! Это число: <span>${numGuess}</span></p>`;
+        notification = `<p>Поздравляю, Вы угадали! Это число: <span>${numGuess}</span></p>
+        <p>Использовано попыток: <span>${10 - attempt}</span> </p>
+        <p>Хотели бы <span>сыграть</span> еще?</p>`;
         break;
 
       case x < isNumber(quest) && x !== isNumber(quest):
-        alert("Загаданное число меньше");
+        alert(`Загаданное число меньше.\n Осталось попыток:\n ${attempt} `);
         question();
         break;
 
       case x > isNumber(quest) && x !== isNumber(quest):
-        alert("Загаданное число больше");
+        alert(`Загаданное число больше.\n Осталось   попыток:\n ${attempt}`);
         question();
         break;
 
@@ -52,17 +67,24 @@ const showingQuestion = function (x) {
     }
   }
   question();
-};
+ };
 
 showingQuestion(numRandom());
 
 contentConteiner.insertAdjacentHTML(
-  "beforeend",
+  "afterbegin",
   `
-  <div class="container">
-  ${notification}
-  <!--p>Загаданное число: <span>${numGuess}</span></!--p-->
-
-</div>
-`
+      ${notification}
+ `
 );
+
+if(playBtn){
+ 
+playBtn.addEventListener("click",  () =>{
+  console.log("click")
+  window.location.reload();
+  return false;
+});
+}
+
+

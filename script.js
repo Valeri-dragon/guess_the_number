@@ -31,7 +31,8 @@ const showingQuestion = function (x) {
 
     attempt--;
 
-    quest = prompt("Угадай число от 1 до 100\nУ вас 10 попыток");
+    quest = prompt(`Угадай число от 1 до 100\nУ вас всего 10 попыток\n
+    Это попытка: ${10-attempt} `);
 
     switch (true) {
       case quest === null:

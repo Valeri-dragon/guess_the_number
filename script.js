@@ -5,8 +5,7 @@ let notification;
 let numGuess;
 
 const numRandom = function () {
-  numGuess = Math.ceil(Math.random() * 100)
-  console.log(numGuess);
+  numGuess = Math.ceil(Math.random() * 100);
   return numGuess;
 };
 
@@ -24,8 +23,7 @@ const isNumber = function (num) {
 };
 
 const showingQuestion = function (x) {
-     function question() {
-    
+  function question() {
     quest = prompt("Угадай число от 1 до 100");
 
     switch (true) {
@@ -33,17 +31,19 @@ const showingQuestion = function (x) {
         notification = `<p>Игра окончена</p>`;
         break;
 
-      case x === quest:
+      case x === isNumber(quest):
         notification = `<p>Поздравляю, Вы угадали! Это число: <span>${numGuess}</span></p>`;
         break;
 
-      case x < quest && x !== quest:
+      case x < isNumber(quest) && x !== isNumber(quest):
         alert("Загаданное число меньше");
         question();
+        break;
 
-      case x > quest && x !== quest:
+      case x > isNumber(quest) && x !== isNumber(quest):
         alert("Загаданное число больше");
         question();
+        break;
 
       case !isNumber(quest):
         alert("Введи число");
